@@ -32,8 +32,6 @@ public class TipCalculator extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        //TODO:add method to save bill and percent
-
         if(savedInstanceState == null){     //if first run
             currentBillTotal = 0.0;
             currentCustomPercent = 18;
@@ -71,20 +69,20 @@ public class TipCalculator extends Activity{
         double tenPercentTip = currentBillTotal * 0.10;
         double tenPercentTotal = currentBillTotal + tenPercentTip;
 
-        tip10EditText.setText(String.format("%0.2f", tenPercentTip));
-        total10EditText.setText(String.format("%0.2f", tenPercentTotal));
+        tip10EditText.setText(String.format("%.2f", tenPercentTip));     //format error
+        total10EditText.setText(String.format("%.2f", tenPercentTotal));
 
         double fifteenPercentTip = currentBillTotal * 0.15;
         double fifteenPercentTotal = currentBillTotal + fifteenPercentTip;
 
-        tip15EditText.setText(String.format("%0.2f", fifteenPercentTip));
-        total15EditText.setText(String.format("%0.2f", fifteenPercentTotal));
+        tip15EditText.setText(String.format("%.2f", fifteenPercentTip));
+        total15EditText.setText(String.format("%.2f", fifteenPercentTotal));
 
         double twentyPercentTip = currentBillTotal * 0.20;
         double twentyPercentTotal = currentBillTotal + twentyPercentTip;
 
-        tip20EditText.setText(String.format("%0.2f", twentyPercentTip));
-        total20EditText.setText(String.format("%0.2f", twentyPercentTotal));
+        tip20EditText.setText(String.format("%.2f", twentyPercentTip));
+        total20EditText.setText(String.format("%.2f", twentyPercentTotal));
 
 
     }
@@ -94,7 +92,7 @@ public class TipCalculator extends Activity{
         customTipTextView.setText(currentCustomPercent + " %"); //set custom % value text
 
         //calc custom tip
-        double customTipAmount = currentBillTotal * currentCustomPercent * 0.1;
+        double customTipAmount = currentBillTotal * currentCustomPercent * 0.01;
 
         //calc total custom bill
         double customTotalAmount = currentBillTotal + customTipAmount;
