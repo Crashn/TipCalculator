@@ -62,7 +62,7 @@ public class TipCalculator extends Activity{
 
         SeekBar customSeekBar = (SeekBar) findViewById(R.id.customSeekBar);
         customSeekBar.setOnSeekBarChangeListener(customSeekBarListener);
-        //TODO:create object customSeekBarListener
+
 
     }
 
@@ -87,7 +87,73 @@ public class TipCalculator extends Activity{
         total20EditText.setText(String.format("%0.2f", twentyPercentTotal));
 
 
+    }
+
+    private void updateCustom(){
+
+        customTipTextView.setText(currentCustomPercent + " %"); //set custom % value text
+
+        //calc custom tip
+        double customTipAmount = currentBillTotal * currentCustomPercent * 0.1;
+
+        //calc total custom bill
+        double customTotalAmount = currentBillTotal + customTipAmount;
+
+        //set calculated values to fields
+        tipCustomEditText.setText(String.format(" %.02f", customTipAmount));
+        totalCustomEditText.setText(String.format(" %.02f", customTotalAmount));
 
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putDouble(BILL_TOTAL, currentBillTotal);
+        outState.putDouble(CUSTOM_PERCENT, currentCustomPercent);
+    }
+
+    private OnSeekBarChangeListener customSeekBarListener = new OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+            currentCustomPercent = seekBar.getProgress();
+            updateCustom();
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+
+        }
+    };
+
+    private TextWatcher billEditTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+            try{
+                currentBillTotal = Double.parseDouble(charSequence.toString());
+            }
+            catch (NumberFormatException e){
+                currentBillTotal = 0.0;
+            }
+            updateStandard();
+            updateCustom();
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
 }
